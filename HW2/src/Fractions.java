@@ -1,12 +1,10 @@
-//Число должно быть представлено двумя полями: целая часть - длинное целое,
-//дробная часть - короткое целое. Реализовать арифметические операции сложения, вычитания, умножения и операции сравнения.
-//В функции main проверить эти методы.
+
 
 public class Fractions {
     private final short denominator;
     private final long numerator;
 
-    //исключение throw new для 0 в знаменателе
+
     public Fractions(long numerator, short denominator) {
         if (denominator == 0) {
             throw new IllegalArgumentException("Denominator can`t be 0");
@@ -49,8 +47,6 @@ public class Fractions {
         short detRes = (short) (this.denominator * forDiv.numerator);
         return new Fractions(numRes, detRes);
     }
-
-
 
 
     @Override

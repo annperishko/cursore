@@ -8,9 +8,8 @@ public class Main {
         System.out.println("1. Circle area = " + area);
 
 //Task 2
-        CountObj A = new CountObj();
-        CountObj B = new CountObj();
-        CountObj C = new CountObj();
+        CountObj firstObj = new CountObj();
+        CountObj secondObj = new CountObj();
 
         System.out.println("2. Created objects = " + CountObj.count);
 
@@ -49,12 +48,12 @@ public class Main {
 
 
 //Task 5
-
         Money firstMoney = new Money(12, (byte) 25);
         Money secondMoney = new Money(2, (byte) 50);
 
-        System.out.println();
-        System.out.println("\tMoney");
+        
+        System.out.println("5. Money: ");
+
 
         System.out.print("Sum: ");
         Money resultMoney = firstMoney.sum(secondMoney);
@@ -64,7 +63,7 @@ public class Main {
         resultMoney = firstMoney.subtraction(secondMoney);
         System.out.println(resultMoney.toString());
 
-        System.out.print("Share: ");
+        System.out.print("Division: ");
         resultMoney = firstMoney.divisionOfSums(secondMoney);
         System.out.println(resultMoney.toString());
 
@@ -76,8 +75,11 @@ public class Main {
         resultMoney = firstMoney.multiplicationByNum(3.7f);
         System.out.println(resultMoney.toString());
 
-        System.out.print("Equal: ");
-        firstMoney.equals(secondMoney);
+        System.out.print("Сomparison: ");
+        boolean result = firstMoney.equals(secondMoney);
+
+        System.out.println(result);
+
 
     }
 
