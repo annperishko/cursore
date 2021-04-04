@@ -6,9 +6,10 @@ import vertex.Vertex3D;
 import java.util.Arrays;
 
 public class Cuboid extends SpaceShape {
-    //holds 1 vertex, width, height, depth
 
-    private final double width, height, depth;
+    private final double width;
+    private final double height;
+    private final double depth;
 
 
     public Cuboid(Vertex3D vertex, double width, double height, double depth) {

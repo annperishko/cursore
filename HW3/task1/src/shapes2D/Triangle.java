@@ -2,7 +2,6 @@ package shapes2D;
 
 import abstractClasses.PlaneShape;
 import vertex.Vertex2D;
-
 import java.util.Arrays;
 
 public class Triangle extends PlaneShape {
@@ -20,7 +19,6 @@ public class Triangle extends PlaneShape {
         bc = vertices[1].getDistance(vertices[2]);
         ca = vertices[2].getDistance(vertices[0]);
     }
-
 
     @Override
     public double getArea() {

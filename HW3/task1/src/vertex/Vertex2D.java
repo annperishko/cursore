@@ -21,7 +21,6 @@ public class Vertex2D {
 
     }
 
-
     @Override
     public String toString(){
         return "Vertex 2D:" + "\nx = " + x + "\ny = " + y;

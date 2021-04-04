@@ -12,8 +12,6 @@ public class Circle extends PlaneShape {
     public Circle(Vertex2D vertex, double radius){
         this.vertices = new Vertex2D[]{vertex};
         this.radius = radius;
-
-
     }
 
     @Override

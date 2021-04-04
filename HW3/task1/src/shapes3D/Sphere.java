@@ -2,7 +2,6 @@ package shapes3D;
 
 import abstractClasses.SpaceShape;
 import vertex.Vertex3D;
-
 import java.util.Arrays;
 
 public class Sphere extends SpaceShape {
