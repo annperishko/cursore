@@ -1,9 +1,7 @@
 import org.postgresql.ds.PGSimpleDataSource;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,8 +18,8 @@ public class Airport {
     private List<Pilot> getPilotList() {
         ArrayList<Pilot> pilotsList = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
-             Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery("select * from pilots");
+             var statement = connection.createStatement()) {
+            var resultSet = statement.executeQuery("select * from pilots");
             while (resultSet.next()) {
                 Pilot pilot = new Pilot(
                         resultSet.getString("name"),
@@ -39,8 +37,8 @@ public class Airport {
     private List<Plane> getPlaneList() {
         ArrayList<Plane> planesList = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
-             Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery("select * from plane");
+             var statement = connection.createStatement()) {
+            var resultSet = statement.executeQuery("select * from plane");
             while (resultSet.next()) {
                 Plane plane = new Plane(
                         resultSet.getString("plane_model"),
@@ -55,34 +53,25 @@ public class Airport {
         return planesList;
     }
 
-    private List<Plane> getUsedPlane(Map<String, List<Plane>> planeMap, Map<String, List<Pilot>> pilotMap) {
-        ArrayList<Plane> usedPlanes = new ArrayList<>();
-        ArrayList<Pilot> usedPilot = new ArrayList<>();
-        for (Map.Entry<String, List<Pilot>> pilotEntry : pilotMap.entrySet()) {
-            String modelPlane = pilotEntry.getKey();
-            List<Pilot> pilots = pilotEntry.getValue();
-            pilots.removeAll(usedPilot);
-            int numFreePlanes = (pilots.size() % 2 == 0) ? pilots.size() / 2 : (pilots.size() - 1) / 2;
-            for (int i = 0; i < numFreePlanes * 2; i++) {
-                usedPilot.add(pilots.get(i));
-            }
-            for (Map.Entry<String, List<Plane>> planeEntry : planeMap.entrySet()) {
-                if (planeEntry.getKey().equals(modelPlane)) {
-                    List<Plane> planes = planeEntry.getValue();
-                    planes.removeAll(usedPlanes);
-                    for (Plane plane : planes) {
-                        if (plane.getPlaneModel().equals(modelPlane)) {
-                            if (numFreePlanes == 0) {
-                                break;
-                            }
-                            usedPlanes.add(plane);
-                            numFreePlanes--;
+    private void getUsedPlane(Map<String, List<Plane>> modelPlaneMap,
+                              ArrayList<Plane> usedPlanes,
+                              String planeModel,
+                              int freePlanesCount) {
+        for (Map.Entry<String, List<Plane>> modelPlaneEntry : modelPlaneMap.entrySet()) {
+            if (modelPlaneEntry.getKey().equals(planeModel)) {
+                var planes = modelPlaneEntry.getValue();
+                planes.removeAll(usedPlanes);
+                for (Plane plane : planes) {
+                    if (plane.getPlaneModel().equals(planeModel)) {
+                        if (freePlanesCount == 0) {
+                            break;
                         }
+                        usedPlanes.add(plane);
+                        freePlanesCount--;
                     }
                 }
             }
         }
-        return usedPlanes;
     }
 
     public int clientCount() {
@@ -90,10 +79,10 @@ public class Airport {
         List<Plane> planeList = getPlaneList();
         Map<String, List<Pilot>> collectPilot = pilotList.stream().collect(Collectors.groupingBy(Pilot::getName));
         Map<String, List<Plane>> collectPlane = planeList.stream().collect(Collectors.groupingBy(Plane::getPlaneModel));
-        int clientCount = 0;
+        var clientCount = 0;
         List<Plane> usedPlane = getUsedPlane(collectPlane, collectPilot);
         for (Plane plane : usedPlane) {
-            clientCount += plane.getNumberOfSeats();
+            clientCount += plane.getSeats();
         }
         return clientCount;
     }

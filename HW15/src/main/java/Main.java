@@ -11,6 +11,6 @@ public class Main {
         pgSimpleDataSource.setUser(USER);
         pgSimpleDataSource.setPassword(PASSWORD);
         Airport airport = new Airport(pgSimpleDataSource);
-        System.out.printf("Count of possible seats: %s",airport.clientCount());
+        System.out.printf("Count of possible seats: %s", airport.clientCount());
     }
 }
